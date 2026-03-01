@@ -16,11 +16,11 @@ import java.util.UUID;
 public class PaymentService {
     private final PaymentRepository paymentRepository;
 
-    public UUID createPayment(String merchantId, Long amount, String currency){
+    public PaymentIntent createPayment(String merchantId, Long amount, String currency){
         PaymentIntent newPayment = PaymentIntent.createNew(merchantId, amount, currency);
-        paymentRepository.save(newPayment);
+        PaymentIntent saved = paymentRepository.save(newPayment);
 
-        return newPayment.getId();
+        return saved;
     }
 
     public void applyEvent(UUID paymentId, PaymentEvent event){
